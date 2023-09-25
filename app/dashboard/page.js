@@ -1,19 +1,29 @@
 'use client'
-import Container from '@/components/Container';
-import SignIn from '@/components/SignIn';
+import Container from '../../components/Container';
 import Image from 'next/image'
-import Dashboard from '../../assets/icons/dashboard_icon.png'
+import dashboard from '../../assets/icons/dashboard_icon.png'
 import Schedule from '../../assets/icons/schedule_icon.png'
 import Settings from '../../assets/icons/setting_icon.png'
 import User from '../../assets/icons/user_icon.png'
 import Transactions from '../../assets/icons/transaction_icon.png'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Chart as ChartJS } from "chart.js/auto";
 import { Bar, Doughnut } from 'react-chartjs-2';
+import { signOut, useSession } from 'next-auth/react';
+import { redirect } from 'next/dist/server/api-utils';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import AddProfile from '../../components/AddProfile';
+import { createClient } from '@supabase/supabase-js';
 
 
-export default function dashboard() {
-
+export default function Dashboard() {
+    const { data: session } = useSession({
+        required: true,
+        onUnauthenticated() {
+            redirect('/')
+        }
+    });
+    console.log(session);
     const [userData, setUserData] = useState({
         labels: [2002, 2004, 2006, 2008],
         datasets: [
@@ -56,6 +66,10 @@ export default function dashboard() {
         ],
     });
 
+
+    useEffect(() => { }, [session]);
+
+
     return (
         <main className="flex min-h-screen items-center justify-between bg-[#F8FAFF] text-black">
             <div className="flex p-10 h-screen w-full">
@@ -65,7 +79,7 @@ export default function dashboard() {
                         <div className="flex flex-col justify-between h-full">
                             <div className="flex flex-col gap-4 mt-8">
                                 <div className="flex items-center gap-4 hover:cursor-pointer">
-                                    <Image src={Dashboard} alt="1" height="12" width="12"></Image>
+                                    <Image src={dashboard} alt="1" height="12" width="12"></Image>
                                     <h2 className="text-sm font-bold">Dashboard</h2>
                                 </div>
                                 <div className="flex items-center gap-4 hover:cursor-pointer">
@@ -95,11 +109,11 @@ export default function dashboard() {
                 <div className="h-full w-10/12 border flex flex-col items-center px-5">
                     <div className="flex justify-between w-full my-5">
                         <h1 className="font-bold text-lg">Dashboard</h1>
-                        <div>img</div>
+                        <div onClick={() => { signOut() }}>Sign Out</div>
                     </div>
                     <div className="w-full overflow-y-scroll flex flex-col justify-between h-full">
                         <div className="flex gap-5 border w-full">
-                            <div className="w-full h-4">
+                            <div className="w-full">
                                 <Container topic="Revenue"></Container>
                             </div>
                             <div className="w-full">
@@ -155,7 +169,9 @@ export default function dashboard() {
                                     }
                                 } /></div>
                             </div>
-                            <div className="border px-6 py-3 rounded-lg w-1/2">addprofile</div>
+                            <div className="border px-6 py-3 rounded-lg w-1/2">
+                                {session?.user ? <AddProfile session={session} /> : "Loading"}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,24 @@
-import SignIn from '@/components/SignIn';
-import Image from 'next/image'
+'use client'
+import { signIn, useSession } from 'next-auth/react';
+import Dashboard from './dashboard/page';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const { data: session } = useSession();
+  const router = useRouter();
+  console.log(session);
+
+  if (session) {
+    router.refresh();
+    router.push('/dashboard');
+  }
+
+
+  function handleGoogleSignIn() {
+    signIn("google");
+
+  }
+
   return (
     <main className="flex min-h-screen items-center justify-between bg-[#F8FAFF] ">
       <div className="bg-[#4285F4] h-full min-h-screen w-1/2">
@@ -24,8 +41,9 @@ export default function Home() {
                 <p className="text-xs">Sign in to your account</p>
               </div>
               <div className="flex gap-2 my-2 border justify-between">
-                <div className="bg-white text-xs px-8 py-1">google button</div>
-                <div className="bg-white text-xs px-8 py-1">apple button</div>
+                <div onClick={() => { handleGoogleSignIn() }} className="bg-white text-xs px-8 py-1 hover:cursor-pointer">google button</div>
+                <div onClick={() => { console.log('Signing in...' + session); }} className="bg-white text-xs px-8 py-1">apple button</div>
+
               </div>
             </div>
 
@@ -40,7 +58,11 @@ export default function Home() {
               </div>
               <div className="text-xs text-[#4285f4]">forgot Password?</div>
               <div className=" bg-[#4285f4] rounded-[10px]">
-                <div className="p-2 font-bold text-white text-[16px] text-center tracking-[0] leading-[normal]">
+                <div onClick={(e) => {
+                  e.preventDefault()
+                  signIn("google")
+                }}
+                  className="p-2 font-bold text-white text-[16px] text-center tracking-[0] leading-[normal]">
                   Sign In
                 </div>
               </div>
