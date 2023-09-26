@@ -4,10 +4,10 @@ import Transaction from "../assets/Transactions.png"
 
 const Frame = (props) => {
     return (
-        <div className="border px-6 py-1 rounded-lg">
+        <div className="border border-2 pb-3 px-6 py-1 rounded-lg boxShadow containerMobile">
 
             <div className="my-2">
-                <Image src={Transaction} alt="" height="30" width="30"></Image>
+                <Image src={props.image} alt="" height="30" width="30"></Image>
             </div>
             <div className="text-[10px]">Total {props.topic}</div>
             <div className="flex justify-between items-center">
