@@ -44,7 +44,7 @@ body {
 }
 
 
-@media (max-width:800px) {
+@media (max-width:810px) {
   .dashboardglobalMobile{
     padding: 0px;
     width: 100%;
@@ -96,4 +96,12 @@ body {
   .MenuMobile{
     display: block;
   }
+  .AddprofileMobile{
+    padding: 20px 10px;
+  }
+  /* .mobileseparator{
+    border-top: 100px solid #b4f262;
+    border-left: 100vw solid transparent;
+    box-sizing: border-box;
+  } */
 }

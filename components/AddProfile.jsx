@@ -93,29 +93,29 @@ export default function AddProfile(props) {
                 <p className='text-xs text-[#858585]'>Add Profile</p>
             </div> :
 
-                <div className='flex flex-col justify-between h-full px-5 py-5'>
+                <div className='flex flex-col justify-between h-full px-5 py-5 AddprofileMobile'>
                     <h1 className='text-2xl font-semibold'>{profile ? profile[0].name : ""}</h1>
-                    <div className='flex flex-col justify-between h-3/6'>
-                        <div className='flex justify-between w-full'>
-                            <div className='flex items-center text-xs gap-1'>
-                                <Image src={WhatsApp} className='w-[2.5em]' />
-                                <div className={textstyle}>{profile ? profile[0].phone : ""}</div>
-                            </div>
-                            <div className='flex items-center text-xs gap-1'>
-                                <Image src={Insta} className='w-[2.5em]' />
-                                <div className={textstyle}>{profile ? profile[0].instagram : ""}</div>
-                            </div>
+                    <div className='grid grid-cols-2 grid-rows-2 justify-between'>
+
+                        <div className='flex items-center text-xs gap-1'>
+                            <Image src={WhatsApp} className='w-[2.5em]' />
+                            <div className={textstyle}>{profile ? profile[0].phone : ""}</div>
                         </div>
-                        <div className='flex justify-between w-full'>
-                            <div className='flex items-center text-xs gap-1'>
-                                <Image src={Email} className='w-[2.5em]' />
-                                <div className={textstyle}>{profile ? profile[0].email : ""}</div>
-                            </div>
-                            <div className='flex items-center text-xs gap-1'>
-                                <Image src={Youtube} className='w-[2.5em]' />
-                                <div className={textstyle}>{profile ? profile[0].youtube : ""}</div>
-                            </div>
+                        <div className='flex items-center text-xs gap-1 ml-20'>
+                            <Image src={Insta} className='w-[2.5em]' />
+                            <div className={textstyle}>{profile ? profile[0].instagram : ""}</div>
                         </div>
+
+
+                        <div className='flex items-center text-xs gap-1'>
+                            <Image src={Email} className='w-[2.5em]' />
+                            <div className={textstyle}>{profile ? profile[0].email : ""}</div>
+                        </div>
+                        <div className='flex items-center text-xs gap-1 ml-20'>
+                            <Image src={Youtube} className='w-[2.5em]' />
+                            <div className={textstyle}>{profile ? profile[0].youtube : ""}</div>
+                        </div>
+
                     </div>
                 </div>
                 : ""}

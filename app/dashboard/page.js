@@ -25,7 +25,9 @@ export default function Dashboard() {
 
     const [btc, setbtc] = useState()
     const [eth, seteth] = useState()
-    const [stats, setstats] = useState()
+    const [stats, setstats] = useState({})
+    const [stats2, setstats2] = useState({})
+    const [stats3, setstats3] = useState({})
 
     const [showmenu, setshowmenu] = useState(false)
 
@@ -37,66 +39,43 @@ export default function Dashboard() {
     });
     console.log(session);
 
-    const [userData, setUserData] = useState({
-        labels: [2002, 2004, 2006, 2008],
-        datasets: [
-            {
-                label: "Users Gained",
-                data: [200, 700, 800, 100],
-                backgroundColor: [
-                    "#98D89E"
-                ],
-                borderRadius: "3",
-                barPercentage: .8,
-                categoryPercentage: .3
-            },
-            {
-                label: "Users Lost",
-                data: [300, 200, 600, 500],
-                backgroundColor: [
-                    "#EE8484"
-                ],
-                borderRadius: "3",
-                barPercentage: .8,
-                categoryPercentage: .3
-            }
-        ],
-    });
-    const [userData2, setUserData2] = useState({
-        labels: [2002, 2004, 2006, 2008],
-        datasets: [
-            {
-                label: "Users Gained",
-                data: [2002, 2004, 2006, 2008],
-                backgroundColor: [
-                    "#98D89E",
-                    "#EE8484",
-                    "#98D89E",
-                    "#EE8484",
-                ],
-                borderRadius: "1"
-            }
-        ],
-    });
     async function getGraphData() {
         const data1 = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true")
             .then(function (response) {
                 return response.json();
             }).then(function (data) {
-                console.log(data);
+                setstats(data)
             });
-        const bitcoin = await fetch("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily")
+        const data2 = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true")
             .then(function (response) {
                 return response.json();
             }).then(function (data) {
-                console.log(data);
+                setstats2(data)
+            });
+        const data3 = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true")
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                setstats3(data)
+            });
+        const bitcoin = await fetch("https://api.coingecko.com/api/v3/coins/binancecoin/market_chart?vs_currency=usd&days=30&interval=daily")
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                setbtc(data.prices.map(e => {
+                    return e[1]
+                }))
+
             });
         const eth = await fetch("https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=30&interval=daily")
             .then(function (response) {
                 return response.json();
             }).then(function (data) {
-                console.log(data);
+                seteth(data.prices.map(e => {
+                    return e[1]
+                }))
             });
+
 
         return { data: data1, bitcoin: bitcoin?.prices, eth: eth?.prices }
     }
@@ -114,7 +93,7 @@ export default function Dashboard() {
     useEffect(() => {
         getGraphData()
             .then(res => {
-
+                console.log(btc);
             })
     }, []);
 
@@ -164,7 +143,7 @@ export default function Dashboard() {
                             <Image src={Menu} className='MenuMobile hidden hover:scale-110 cursor-pointer' onClick={() => { handleMenu() }} />
                             <h1 className="font-bold text-lg">Dashboard</h1>
                         </div>
-                        <div onClick={() => { signOut() }} className='border w-[35px]'>
+                        <div onClick={() => { signOut() }} className='w-[35px]'>
                             <img src={session?.user?.image} className='w-full rounded-[100px]' />
                         </div>
                     </div>
@@ -172,27 +151,65 @@ export default function Dashboard() {
                         <div className="flex w-full firstRowMobile">
                             <div className='w-full flex justify-between'>
                                 <div className="w-full mr-2 mb-2">
-                                    <Container topic="Revenue" image={Green}></Container>
+                                    <Container topic="Bitcoin Price" data={"$" + stats?.bitcoin?.usd} image={Green}></Container>
                                 </div>
                                 <div className="w-full mr-2 mb-2 justify-between">
-                                    <Container topic="Transactions" image={Yellow}></Container>
+                                    <Container topic="Change in 24h" data={stats?.bitcoin?.usd_24h_change} image={Yellow}></Container>
                                 </div>
                             </div>
                             <div className='w-full flex'>
                                 <div className="w-full mr-2 mb-2">
-                                    <Container topic="Likes" image={Pink}></Container>
+                                    <Container topic="Volume" data={"$" + stats?.bitcoin?.usd_24h_vol} image={Pink}></Container>
                                 </div>
                                 <div className="w-full mr-2 mb-2">
-                                    <Container topic="Users" image={Purp}></Container>
+                                    <Container topic="Market Cap" data={"$" + stats?.bitcoin?.usd_market_cap} image={Purp}></Container>
                                 </div>
                             </div>
                         </div>
                         <div className="w-full my-5">
                             <div className="border border-2 boxShadow px-10 py-3 rounded-lg ActivitiesMobile">
-                                <h1 className="font-bold text-md">Activities</h1>
+                                <div className='flex justify-between'>
+                                    <h1 className="font-bold text-md">Activities</h1>
+                                    <div className='text-xs flex gap-3'>
+                                        <span className='flex items-center gap-1'>
+                                            <span className='h-2 rounded bg-[#98D89E] w-2'></span>
+                                            <span>Binance Coin</span>
+                                        </span>
+                                        <span className='flex items-center gap-1'>
+                                            <span className='h-2 rounded bg-[#EE8484] w-2'></span>
+                                            <span>Ether</span>
+                                        </span>
+                                    </div>
+                                </div>
                                 <h2 className="font-light text-[11px]">May-June 2021</h2>
                                 <div>
-                                    <Bar data={userData} options={
+                                    <Bar data={
+                                        {
+                                            labels: ["Week1", "Week2", "Week3", "Week4"],
+                                            datasets: [
+                                                {
+                                                    label: "Binance Coin",
+                                                    data: btc,
+                                                    backgroundColor: [
+                                                        "#98D89E"
+                                                    ],
+                                                    borderRadius: "3",
+                                                    barPercentage: .8,
+                                                    categoryPercentage: .3
+                                                },
+                                                {
+                                                    label: "Ethereum",
+                                                    data: eth,
+                                                    backgroundColor: [
+                                                        "#EE8484"
+                                                    ],
+                                                    borderRadius: "3",
+                                                    barPercentage: .8,
+                                                    categoryPercentage: .3
+                                                }
+                                            ],
+                                        }
+                                    } options={
                                         {
                                             maintainAspectRatio: false,
                                             plugins: {
@@ -219,7 +236,23 @@ export default function Dashboard() {
                                     <h1 className="font-bold text-md">Top Products</h1>
                                     <h2 className="font-light text-[11px]">May-June 2021</h2>
                                 </div>
-                                <div><Doughnut data={userData2} options={
+                                <div><Doughnut data={
+                                    {
+                                        labels: [2002, 2004, 2006],
+                                        datasets: [
+                                            {
+                                                label: "Current Price",
+                                                data: [stats?.bitcoin?.usd, stats2?.ethereum?.usd, stats3?.binancecoin?.usd],
+                                                backgroundColor: [
+                                                    "#98D89E",
+                                                    "#EE8484",
+                                                    "purple"
+                                                ],
+                                                borderRadius: "1"
+                                            }
+                                        ],
+                                    }
+                                } options={
                                     {
                                         maintainAspectRatio: false,
                                         plugins: {
