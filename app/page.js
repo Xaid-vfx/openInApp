@@ -61,13 +61,13 @@ export default function Home() {
                       <p className="text-xs">Sign in to your account</p>
                     </div>
                     <div className={`${mont.className} flex gap-2 my-6 justify-between`}>
-                      <div className='flex items-center text-xs  px-8 py-1 gap-2 bg-white rounded  text-[#858585] font-light hover:cursor-pointer'>
+                      <div onClick={() => { handleGoogleSignIn() }} className='flex items-center text-xs  px-8 py-1 gap-2 bg-white rounded  text-[#858585] font-light hover:cursor-pointer'>
                         <Image src={google} className='w-3' alt='google' />
-                        <div onClick={() => { handleGoogleSignIn() }} className="">Sign in with Google</div>
+                        <div className="">Sign in with Google</div>
                       </div>
-                      <div className='flex items-center text-xs  px-8 py-1 gap-2 bg-white rounded  text-[#858585] font-light hover:cursor-pointer'>
+                      <div onClick={() => { handleGoogleSignIn() }} className='flex items-center text-xs  px-8 py-1 gap-2 bg-white rounded  text-[#858585] font-light hover:cursor-pointer'>
                         <Image src={apple} className='w-3' alt='google' />
-                        <div onClick={() => { handleGoogleSignIn() }} className="">Sign in with Apple</div>
+                        <div className="">Sign in with Apple</div>
                       </div>
                     </div>
                   </div>

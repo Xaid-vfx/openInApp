@@ -146,14 +146,14 @@ export default function Dashboard() {
                 <div className="h-full w-10/12 flex flex-col items-center px-5 dashboardMobile2 relative">
                     <div className="flex justify-between w-full my-5 items-center">
                         <div className='flex items-center gap-2'>
-                            <Image src={Menu} className='MenuMobile hidden hover:scale-110 cursor-pointer' onClick={() => { handleMenu() }} />
+                            <Image src={Menu} className='MenuMobile hidden cursor-pointer hover:scale-110 hover:rotate-180 transition-all ' onClick={() => { handleMenu() }} />
                             <h1 className="font-bold text-lg">Dashboard</h1>
                         </div>
                         <div className='flex gap-6 items-center'>
                             <input type='text' placeholder='Search...' className='p-1 px-4 rounded placeholder:text-sm searchMobile' />
-                            <Image src={Bell} alt='Bell' height={20} width={20} />
+                            <Image src={Bell} className='hover:scale-110 transition-all' alt='Bell' height={20} width={20} />
                             <div onClick={() => { handleClick() }} className='w-[35px] cursor-pointer'>
-                                <img src={session?.user?.image} className='w-full rounded-[100px]' />
+                                <img src={session?.user?.image} className=' transition-all hover:scale-110 w-full rounded-[100px]' />
                             </div>
                             <div onClick={() => { signOut({ callbackUrl: 'http://localhost:3000' }) }} id="SignOutbtn" className='hover:bg-slate-100 cursor-pointer rounded-md absolute right-4 top-16 bg-white p-2 border text-sm hidden'>Sign Out</div>
                         </div>

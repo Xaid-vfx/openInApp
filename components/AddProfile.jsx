@@ -8,6 +8,9 @@ import Insta from '../assets/icons/Insta.png'
 import Email from '../assets/icons/Email.png'
 import Youtube from '../assets/icons/Youtube.png'
 import Image from 'next/image';
+import { Figtree } from 'next/font/google'
+
+const fig = Figtree({ subsets: ['latin'] })
 
 export default function AddProfile(props) {
     const [open, setOpen] = useState(false)
@@ -33,7 +36,8 @@ export default function AddProfile(props) {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '30%',
-            borderRadius: '10px'
+            borderRadius: '15px',
+            padding: '15px 0px'
         }
     }
 
@@ -85,7 +89,7 @@ export default function AddProfile(props) {
 
 
     return (
-        <div className='h-full'>
+        <div className={` ${fig.className} h-full`}>
             {profile ? profile.length == 0 ? <div onClick={() => {
                 setOpen(true)
             }} className='flex gap-2 flex-col justify-center items-center h-full hover:scale-110 transition-all cursor-pointer'>
@@ -120,53 +124,54 @@ export default function AddProfile(props) {
                 </div>
                 : ""}
             <Modal ariaHideApp={false} isOpen={open} onRequestClose={() => { setOpen(false); setProfileTab("Basic") }} style={customStyles}>
-                <div className='text-black p-2'>
-                    <div className='flex justify-between mb-5'>
-                        <h1 className=''>Add New Profile</h1>
-                        <div onClick={() => { setOpen(false) }}>close</div>
+                <div className={`${fig.className} text-black`}>
+                    <div className='flex justify-between px-5'>
+                        <h1 className='font-medium text-base'>Add New Profile</h1>
+                        <div onClick={() => { setOpen(false) }} className='hover:scale-125 hover:rotate-180 transition-all cursor-pointer'>X</div>
                     </div>
-                    <div className='flex justify-between gap-8'>
+                    <div className='w-[100%] border-t bg-black my-4'></div>
+                    <div className='flex justify-between gap-8 px-5'>
                         <div className='text-center w-1/2  cursor-pointer' >
-                            <p className='text-sm mb-2'>Basic</p>
+                            <p className='text-sm font-medium mb-2'>Basic</p>
                             <div id="Basic" style={{ borderColor: profileTab == "Basic" ? "#3F84F8" : "#D9D9D9" }} className='line border-2 rounded'></div>
                         </div>
                         <div className='text-center w-1/2  cursor-pointer'>
-                            <p className='text-sm mb-2'>Contact</p>
+                            <p className='text-sm mb-2 font-medium'>Contact</p>
                             <div id="Contact" style={{ borderColor: profileTab == "Contact" ? "#3F84F8" : "#D9D9D9" }} className='line border-2 rounded'></div>
                         </div>
                     </div>
                     {profileTab == "Basic" ?
-                        <div>
-                            <div className='mt-3'>
+                        <div className='px-5'>
+                            <div className='mt-5'>
                                 <p className='text-sm font-light mb-2'>Enter Name*</p>
                                 <input onChange={(e) => { setName(e.target.value) }} className='p-2 border rounded placeholder:text-sm w-full' type="text" placeholder='Eg. John Doe' />
                             </div>
-                            <div className='mt-3'>
+                            <div className='mt-5'>
                                 <p className='text-sm font-light mb-2'>Enter Email*</p>
-                                <input onChange={(e) => { setEmail(e.target.value) }} className='p-2 border rounded placeholder:text-sm w-full' type="text" placeholder='Eg. John Doe' />
+                                <input onChange={(e) => { setEmail(e.target.value) }} className='p-2 border rounded placeholder:text-sm w-full' type="text" placeholder='Eg. JohnDoe@gmail.cpm' />
                             </div>
-                            <div className='mt-3'>
+                            <div className='mt-5'>
                                 <p className='text-sm font-light mb-2'>Enter Phone*</p>
-                                <input onChange={(e) => { setPhone(e.target.value) }} className='p-2 border rounded placeholder:text-sm w-full' type="text" placeholder='Eg. John Doe' />
+                                <input onChange={(e) => { setPhone(e.target.value) }} className='p-2 border rounded placeholder:text-sm w-full' type="text" placeholder='Eg. +91 8227835525' />
                             </div>
                             <div className='flex justify-end'>
-                                <div onClick={() => { setProfileTab("Contact") }} className='text-xs mt-5 w-1/5 text-white text-center bg-[#3F84F8] p-2 rounded'>Next</div>
+                                <div onClick={() => { setProfileTab("Contact") }} className='text-xs mt-10 w-1/6 text-white text-center bg-[#3F84F8] py-2 rounded-lg cursor-pointer'>Next</div>
                             </div>
                         </div>
                         :
-                        <div>
-                            <div className='mt-3'>
+                        <div className='px-5'>
+                            <div className='mt-5'>
                                 <p className='text-sm font-light mb-2'>Enter Insta (optional)</p>
-                                <input onChange={(e) => { setInsta(e.target.value) }} className='p-2 border rounded placeholder:text-sm w-full' type="text" placeholder='Eg. John Doe' />
+                                <input onChange={(e) => { setInsta(e.target.value) }} className='p-2 border rounded placeholder:text-sm w-full' type="text" placeholder='Eg. John-Doe' />
                             </div>
-                            <div className='mt-3'>
+                            <div className='mt-5'>
                                 <p className='text-sm font-light mb-2'>Enter Youtube (optional)</p>
-                                <input onChange={(e) => { setYoutube(e.target.value) }} className='p-2 border rounded placeholder:text-sm w-full' type="text" placeholder='Eg. John Doe' />
+                                <input onChange={(e) => { setYoutube(e.target.value) }} className='p-2 border rounded placeholder:text-sm w-full' type="text" placeholder='Eg. JohnDoeClips' />
                             </div>
 
                             <div className='flex gap-2 justify-end'>
-                                <div onClick={() => { setProfileTab("Basic") }} className='text-xs mt-5 w-1/5 text-center border border-black p-2 rounded'>Back</div>
-                                <div onClick={() => { pushProfile(); setOpen(false); getProfile(); setrefresh(true) }} className='text-xs mt-5 w-1/5 text-white text-center bg-[#3F84F8] p-2 rounded cursor-pointer'>Done</div>
+                                <div onClick={() => { setProfileTab("Basic") }} className='text-xs mt-10 w-1/6 text-center border border-black py-2 rounded-lg cursor-pointer'>Back</div>
+                                <div onClick={() => { pushProfile(); setOpen(false); getProfile(); setrefresh(true) }} className='text-xs mt-10 w-1/6 text-white text-center bg-[#3F84F8] py-2 rounded-lg cursor-pointer'>Done</div>
                             </div>
                         </div>
                     }
