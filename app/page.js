@@ -10,7 +10,7 @@ import discord from '../assets/icons/Discord.png'
 import LinkedIn from '../assets/icons/LinkedIn.png'
 import Github from '../assets/icons/Github.png'
 import Twitter from '../assets/icons/Twitter.png'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import MobilePage from './mobilePage';
 
 const lato = Lato({ subsets: ['latin'], weight: ["100", "300", "400", "700", "900"] })
@@ -19,6 +19,7 @@ const mont = Montserrat({ subsets: ['latin'] })
 export default function Home() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [width, setwidth] = useState();
   console.log(session);
 
   if (session) {
@@ -30,11 +31,14 @@ export default function Home() {
   function handleGoogleSignIn() {
     signIn("google");
   }
+  useEffect(() => {
+    setwidth(window.innerWidth);
+  }, []);
 
   return (
     <div>
       {
-        (window.innerWidth < 800) ? <MobilePage /> :
+        (width < 800) ? <MobilePage /> :
           <main className="flex min-h-screen items-center justify-between bg-[#F8FAFF] Box">
             <div className="bg-[#327bf0] h-full min-h-screen w-5/12 Box1">
               <div className="p-16 flex flex-col justify-between min-h-screen">
