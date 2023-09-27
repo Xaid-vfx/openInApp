@@ -11,7 +11,7 @@ const Frame = (props) => {
     }, [])
 
     return (
-        <div className="border border-2 pb-3 px-6 py-1 rounded-lg boxShadow containerMobile">
+        <div className="border border-2 pb-3 px-6 py-1 rounded-2xl boxShadow containerMobile bg-white">
 
             <div className="my-2">
                 <Image src={props.image} alt="" height="30" width="30"></Image>

@@ -99,6 +99,9 @@ body {
   .AddprofileMobile{
     padding: 20px 10px;
   }
+  .searchMobile{
+    display: none;
+  }
   /* .mobileseparator{
     border-top: 100px solid #b4f262;
     border-left: 100vw solid transparent;

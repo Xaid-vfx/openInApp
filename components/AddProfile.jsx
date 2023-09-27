@@ -55,7 +55,7 @@ export default function AddProfile(props) {
     async function pushProfile() {
 
         const { data, error } = await supabase
-            .from('profile')
+            .from('profiles')
             .insert([
                 { email: email, name: name, phone: phone, instagram: insta, youtube: youtube },
             ])
@@ -67,7 +67,7 @@ export default function AddProfile(props) {
     }
     async function getProfile(mail) {
         let { data: profile, error } = await supabase
-            .from('profile')
+            .from('profiles')
             .select('*')
             .eq('email', mail)
 
@@ -95,7 +95,7 @@ export default function AddProfile(props) {
 
                 <div className='flex flex-col justify-between h-full px-5 py-5 AddprofileMobile'>
                     <h1 className='text-2xl font-semibold'>{profile ? profile[0].name : ""}</h1>
-                    <div className='grid grid-cols-2 grid-rows-2 justify-between'>
+                    <div className='grid grid-cols-2 grid-rows-2 gap-4 justify-between'>
 
                         <div className='flex items-center text-xs gap-1'>
                             <Image src={WhatsApp} className='w-[2.5em]' />
@@ -166,7 +166,7 @@ export default function AddProfile(props) {
 
                             <div className='flex gap-2 justify-end'>
                                 <div onClick={() => { setProfileTab("Basic") }} className='text-xs mt-5 w-1/5 text-center border border-black p-2 rounded'>Back</div>
-                                <div onClick={() => { pushProfile(); setOpen(false); getProfile(); setrefresh(true) }} className='text-xs mt-5 w-1/5 text-white text-center bg-[#3F84F8] p-2 rounded'>Done</div>
+                                <div onClick={() => { pushProfile(); setOpen(false); getProfile(); setrefresh(true) }} className='text-xs mt-5 w-1/5 text-white text-center bg-[#3F84F8] p-2 rounded cursor-pointer'>Done</div>
                             </div>
                         </div>
                     }

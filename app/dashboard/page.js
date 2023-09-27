@@ -11,6 +11,7 @@ import Purp from '../../assets/icons/purpIcon.png'
 import Green from '../../assets/icons/greenIcon.png'
 import Yellow from '../../assets/Transactions.png'
 import Menu from '../../assets/icons/menu.png'
+import Bell from '../../assets/icons/Bell.png'
 import { useEffect, useState } from 'react';
 import { Chart as ChartJS } from "chart.js/auto";
 import { Bar, Doughnut } from 'react-chartjs-2';
@@ -88,6 +89,11 @@ export default function Dashboard() {
         const ele = document.getElementById("dashboardMobile")
         ele.style.display = "block"
     }
+    function handleClick() {
+        const ele = document.getElementById("SignOutbtn")
+        if (ele.style.display == "block") ele.style.display = "none"
+        else ele.style.display = "block"
+    }
 
 
     useEffect(() => {
@@ -137,14 +143,19 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <div className="h-full w-10/12 flex flex-col items-center px-5 dashboardMobile2">
+                <div className="h-full w-10/12 flex flex-col items-center px-5 dashboardMobile2 relative">
                     <div className="flex justify-between w-full my-5 items-center">
                         <div className='flex items-center gap-2'>
                             <Image src={Menu} className='MenuMobile hidden hover:scale-110 cursor-pointer' onClick={() => { handleMenu() }} />
                             <h1 className="font-bold text-lg">Dashboard</h1>
                         </div>
-                        <div onClick={() => { signOut({ callbackUrl: 'http://localhost:3000' }) }} className='w-[35px]'>
-                            <img src={session?.user?.image} className='w-full rounded-[100px]' />
+                        <div className='flex gap-6 items-center'>
+                            <input type='text' placeholder='Search...' className='p-1 px-4 rounded placeholder:text-sm searchMobile' />
+                            <Image src={Bell} alt='Bell' height={20} width={20} />
+                            <div onClick={() => { handleClick() }} className='w-[35px] cursor-pointer'>
+                                <img src={session?.user?.image} className='w-full rounded-[100px]' />
+                            </div>
+                            <div onClick={() => { signOut({ callbackUrl: 'http://localhost:3000' }) }} id="SignOutbtn" className='hover:bg-slate-100 cursor-pointer rounded-md absolute right-4 top-16 bg-white p-2 border text-sm hidden'>Sign Out</div>
                         </div>
                     </div>
                     <div className="w-full overflow-y-scroll flex flex-col justify-between h-full dashboardMobile21">
@@ -167,21 +178,21 @@ export default function Dashboard() {
                             </div>
                         </div>
                         <div className="w-full my-5">
-                            <div className="border border-2 boxShadow px-10 py-3 rounded-lg ActivitiesMobile">
+                            <div className="border border-2 boxShadow px-10 py-3 rounded-2xl ActivitiesMobile bg-white">
                                 <div className='flex justify-between'>
                                     <h1 className="font-bold text-md">Activities</h1>
-                                    <div className='text-xs flex gap-3'>
-                                        <span className='flex items-center gap-1'>
+                                    <div className='text-xs flex gap-6'>
+                                        <span className='flex items-center gap-2'>
                                             <span className='h-2 rounded bg-[#98D89E] w-2'></span>
                                             <span>Binance Coin</span>
                                         </span>
-                                        <span className='flex items-center gap-1'>
+                                        <span className='flex items-center gap-2'>
                                             <span className='h-2 rounded bg-[#EE8484] w-2'></span>
                                             <span>Ether</span>
                                         </span>
                                     </div>
                                 </div>
-                                <h2 className="font-light text-[11px]">May-June 2021</h2>
+                                <h2 className="font-light text-[11px] mb-4">May-June 2021</h2>
                                 <div>
                                     <Bar data={
                                         {
@@ -231,39 +242,65 @@ export default function Dashboard() {
 
                         </div>
                         <div className="flex w-full lastColumnMobile">
-                            <div className="border border-2 boxShadow px-10 py-3 rounded-lg w-1/2 mr-5 lastColumnMobile1">
+                            <div className="border border-2 boxShadow px-10 py-3 rounded-2xl w-1/2 mr-5 lastColumnMobile1 bg-white">
                                 <div className="flex justify-between items-center">
                                     <h1 className="font-bold text-md">Top Products</h1>
                                     <h2 className="font-light text-[11px]">May-June 2021</h2>
                                 </div>
-                                <div><Doughnut data={
-                                    {
-                                        labels: [2002, 2004, 2006],
-                                        datasets: [
-                                            {
-                                                label: "Current Price",
-                                                data: [stats?.bitcoin?.usd, stats2?.ethereum?.usd, stats3?.binancecoin?.usd],
-                                                backgroundColor: [
-                                                    "#98D89E",
-                                                    "#EE8484",
-                                                    "purple"
-                                                ],
-                                                borderRadius: "1"
-                                            }
-                                        ],
-                                    }
-                                } options={
-                                    {
-                                        maintainAspectRatio: false,
-                                        plugins: {
-                                            legend: {
-                                                display: false
+                                <div className='flex justify-between'>
+                                    <div className='w-1/3'><Doughnut data={
+                                        {
+                                            labels: [2002, 2004, 2006],
+                                            datasets: [
+                                                {
+                                                    label: "Current Price",
+                                                    data: [stats?.bitcoin?.usd, stats2?.ethereum?.usd, stats3?.binancecoin?.usd],
+                                                    backgroundColor: [
+                                                        "#98D89E",
+                                                        "#EE8484",
+                                                        "#9d4bcd"
+                                                    ],
+                                                    borderRadius: "1"
+                                                }
+                                            ],
+                                        }
+                                    } options={
+                                        {
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: {
+                                                    display: false
+                                                }
                                             }
                                         }
-                                    }
-                                } /></div>
+                                    } /></div>
+                                    <div className='w-1/2 text-xs font-semibold flex flex-col justify-center gap-3'>
+                                        <span className=''>
+                                            <div className='flex items-center gap-3'>
+                                                <span className='h-2.5 rounded-xl bg-[#98D89E] w-2.5'></span>
+                                                <span>Bitcoin</span>
+                                            </div>
+                                            <div className='text-[9px] text-[#858585] font-light ml-5'>92%</div>
+
+                                        </span>
+                                        <span className=''>
+                                            <div className='flex items-center gap-3'>
+                                                <span className='h-2.5 rounded-xl bg-[#EE8484] w-2.5'></span>
+                                                <span>Ethereum</span>
+                                            </div>
+                                            <div className='text-[9px] text-[#858585] font-light ml-5'>7%</div>
+                                        </span>
+                                        <span className=''>
+                                            <div className='flex items-center gap-3'>
+                                                <span className='h-2.5 rounded-xl bg-[#9d4bcd] w-2.5'></span>
+                                                <span>Binance coin</span>
+                                            </div>
+                                            <div className='text-[9px] text-[#858585] font-light ml-5'>1%</div>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="border border-2 boxShadow px-6 py-3 rounded-lg w-1/2 lastColumnMobile2">
+                            <div className="border border-2 boxShadow px-6 py-3 rounded-2xl w-1/2 lastColumnMobile2 bg-white">
                                 {session?.user ? <AddProfile session={session} /> : "Loading"}
                             </div>
                         </div>
