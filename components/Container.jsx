@@ -18,7 +18,7 @@ const Frame = (props) => {
             </div>
             <div className="text-[10px]">Total {props.topic}</div>
             <div className="flex justify-between items-center">
-                <div className="text-xl font-bold">{window.innerWidth > 810 ? String(props?.data).slice(0, 8) : String(props?.data).slice(0, 6)}</div>
+                <div className="text-xl font-bold">{width > 810 ? String(props?.data).slice(0, 8) : String(props?.data).slice(0, 6)}</div>
                 <div className="text-[10px] bg-[#E9F9EB] text-green-600 px-2 py-1 rounded-lg">+10%</div>
             </div>
         </div>
