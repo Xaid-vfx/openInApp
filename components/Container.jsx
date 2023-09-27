@@ -1,9 +1,15 @@
 'use client'
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Transaction from "../assets/Transactions.png"
 
 const Frame = (props) => {
+    const [width, setwidth] = useState();
+
+    useEffect(() => {
+        setwidth(window.innerWidth);
+    }, [])
+
     return (
         <div className="border border-2 pb-3 px-6 py-1 rounded-lg boxShadow containerMobile">
 
@@ -12,7 +18,7 @@ const Frame = (props) => {
             </div>
             <div className="text-[10px]">Total {props.topic}</div>
             <div className="flex justify-between items-center">
-                <div className="text-xl font-bold">{String(props?.data).slice(0, 8)}</div>
+                <div className="text-xl font-bold">{window.innerWidth > 810 ? String(props?.data).slice(0, 8) : String(props?.data).slice(0, 6)}</div>
                 <div className="text-[10px] bg-[#E9F9EB] text-green-600 px-2 py-1 rounded-lg">+10%</div>
             </div>
         </div>

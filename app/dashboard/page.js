@@ -143,7 +143,7 @@ export default function Dashboard() {
                             <Image src={Menu} className='MenuMobile hidden hover:scale-110 cursor-pointer' onClick={() => { handleMenu() }} />
                             <h1 className="font-bold text-lg">Dashboard</h1>
                         </div>
-                        <div onClick={() => { signOut() }} className='w-[35px]'>
+                        <div onClick={() => { signOut({ callbackUrl: 'http://localhost:3000' }) }} className='w-[35px]'>
                             <img src={session?.user?.image} className='w-full rounded-[100px]' />
                         </div>
                     </div>

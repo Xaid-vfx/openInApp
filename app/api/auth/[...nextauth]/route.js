@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-import { SupabaseAdapter } from "@auth/supabase-adapter"
 
 const authOptions = {
     // Configure one or more authentication providers
@@ -10,7 +9,10 @@ const authOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
         // ...add more providers here
-    ]
+    ],
+    pages: {
+        signIn: "/",
+    }
 }
 
 const handler = NextAuth(authOptions);
